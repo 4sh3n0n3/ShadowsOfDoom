@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\My\Unity\Projects\ShadowsOfDoom" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="Lights" t="Include">
+            <e p="FlashlightContainer.cs" t="Include" />
+            <e p="FlashlightController.cs" t="Include" />
+            <e p="FlashlightData.cs" t="Include" />
+          </e>
+          <e p="ShootingScript.cs" t="Include" />
+          <e p="SimpleCameraController.cs" t="Include" />
+          <e p="SimplePlayerController.cs" t="Include" />
+          <e p="UI" t="Include">
+            <e p="UIController.cs" t="Include" />
+          </e>
+          <e p="Weapons" t="Include">
+            <e p="Bullet.cs" t="Include" />
+            <e p="IWeapon.cs" t="Include" />
+            <e p="WeaponData.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="ShadowsOfDoom.sln" t="IncludeFlat" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\Users\Александр\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Александр\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_ShadowsOfDoom.-832842540.00" t="ExcludeRecursive" />
+  </component>
+</project>
