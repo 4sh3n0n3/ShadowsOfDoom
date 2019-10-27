@@ -50,7 +50,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+        float modifiedSpeed;
+        if ((controller.MousePos.x < transform.position.x && horizontalMove < 0) || (controller.MousePos.x > transform.position.x && horizontalMove > 0))
+        {
+            modifiedSpeed = horizontalMove;
+        } else
+        {
+            modifiedSpeed = horizontalMove / 2;
+        }
+        controller.Move(modifiedSpeed * Time.fixedDeltaTime, crouch, jump);
         jump = false;
     }
 }
