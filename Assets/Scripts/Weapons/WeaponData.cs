@@ -6,6 +6,10 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public Sprite sprite;
+    public string tag;
     public float damage;
-    public float maxAmmo;
+    public int maxAmmo;
+    public float shootTimer;
+    public float scatter;
+    public float bulletSpeed;
 }

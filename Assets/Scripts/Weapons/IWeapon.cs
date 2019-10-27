@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IWeapon
 {
@@ -8,4 +6,7 @@ public interface IWeapon
     void Restore();
     int Ammo { get; }
     Sprite Sprite { get; }
+    GameObject BulletPrefab { get; set; }
+    string WeaponTag { get; }
+    Camera Camera { get; set; }
 }
