@@ -1,50 +1,44 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShootingScript : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    
     [SerializeField]
-    public List<IWeapon> weapons = new List<IWeapon>();
-
+    private Camera mainCamera;
+    
     [SerializeField]
     private int currentWeapon;
-    
+
+    [SerializeField]
+    private AbstractWeapon[] weapons;
+
+    private Vector3 _mousePos;
+
     private void Start()
     {
-        Debug.Log(weapons.Count);
-        foreach (var w in weapons)
-        {
-            w.BulletPrefab = bulletPrefab;
-        }
+        UIController.Instance.UpdateWeaponImage(weapons[currentWeapon].Sprite);
     }
-
-    public void AddNewWeapon(IWeapon weapon)
-    {
-        if (weapons == null)
-            weapons = new List<IWeapon>();
-        weapons.Add(weapon);
-    } 
-
+    
     private void Update()
     {
         if (Input.GetMouseButton(0))
         {
-            weapons[currentWeapon].Shoot();
+            _mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            _mousePos.z = 0;
+            weapons[currentWeapon].Shoot(_mousePos - transform.position);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Q))
             ChangeWeapon(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.E))
             ChangeWeapon(1);
     }
 
-    private void ChangeWeapon(int weapon)
+    private void ChangeWeapon(int weaponId)
     {
-        currentWeapon = weapon;
+        if (weaponId < 0 || weaponId >= weapons.Length)
+            return;
+        
+        currentWeapon = weaponId;
         UIController.Instance.UpdateWeaponImage(weapons[currentWeapon].Sprite);
     }
 
@@ -52,11 +46,11 @@ public class ShootingScript : MonoBehaviour
     {
         foreach (var w in weapons)
         {
-            if (w.WeaponTag == weaponTag)
-            {
-                w.Restore();
-                break;
-            }
+            if (w.WeaponTag != weaponTag)
+                continue;
+            
+            w.Restore();
+            break;
         }
     }
 }

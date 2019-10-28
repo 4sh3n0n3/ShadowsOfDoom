@@ -12,4 +12,5 @@ public class WeaponData : ScriptableObject
     public float shootTimer;
     public float scatter;
     public float bulletSpeed;
+    public float bulletLifeTime;
 }

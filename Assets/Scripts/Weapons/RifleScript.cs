@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RifleScript : MonoBehaviour, IWeapon
+public class RifleScript : AbstractWeapon
 {
-    public int Ammo => _currentAmmo;
-    public Sprite Sprite => data.sprite;
-    public GameObject BulletPrefab { get; set; }
-    public string WeaponTag => data.tag;
-    public Camera Camera { get; set; }
-
-    public ShootingScript shooter;
+    public override int Ammo => _currentAmmo;
+    public override Sprite Sprite => data.sprite;
+    public override string WeaponTag => data.tag;
+    
+    [SerializeField]
+    private GameObject bulletPrefab;
 
     [SerializeField]
     private WeaponData data;
@@ -22,7 +19,6 @@ public class RifleScript : MonoBehaviour, IWeapon
     private void Start()
     {
         _currentAmmo = data.maxAmmo;
-        shooter.AddNewWeapon(this);
     }
 
     private void Update()
@@ -31,24 +27,24 @@ public class RifleScript : MonoBehaviour, IWeapon
             _shootTimer -= Time.deltaTime;
     }
 
-    public void Shoot()
+    public override void Shoot(Vector3 direction)
     {
-        if (_shootTimer <= 0)
-        {
-            GameObject bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
-            Bullet bulletScript = bullet.GetComponent<Bullet>();
-            bulletScript.damage = data.damage;
-            bulletScript.speed = data.bulletSpeed;
+        if (_shootTimer > 0) 
+            return;
+        
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.damage = data.damage;
+        bulletScript.speed = data.bulletSpeed;
+        bulletScript.lifeTime = data.bulletLifeTime;
             
-            _mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
-            _mousePos.z = 0;
-            bullet.transform.up = _mousePos - transform.position;
-            bullet.transform.Rotate(new Vector3(0, 0, Random.Range(0, data.scatter)));
-            _shootTimer = data.shootTimer;
-        }
+        bullet.transform.up = direction;
+        bullet.transform.Rotate(new Vector3(0, 0, Random.Range(0, data.scatter) - data.scatter / 2));
+        bulletScript.StartMove();
+        _shootTimer = data.shootTimer;
     }
 
-    public void Restore()
+    public override void Restore()
     {
         _currentAmmo = data.maxAmmo;
     }
